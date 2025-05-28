@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    input, button { padding: 8px; margin-top: 10px; width: 300px; }
+    h3 { margin-top: 30px; }
+  </style>
+</head>
+<body>
+  <h2>HSN Code Validator & Suggestor</h2>
+
+  <h3>Validate HSN Codes</h3>
+  <input id="validateInput" placeholder="e.g., 0101, 9999" />
+  <button onclick="validate()">Validate</button>
+  <div id="validateResult"></div>
+
+  <h3>Suggest HSN Codes</h3>
+  <input id="descInput" placeholder="e.g., live horses" />
+  <button onclick="suggest()">Suggest</button>
+  <div id="suggestResult"></div>
+
+  <script>
+    function validate() {
+      const input = document.getElementById("validateInput").value;
+      const codes = input.split(",").map(c => c.trim());
+      google.script.run.withSuccessHandler(displayValidation).validateHSNCodes(codes);
+    }
+
+    function suggest() {
+      const query = document.getElementById("descInput").value;
+      google.script.run.withSuccessHandler(displaySuggestions).suggestHSNCodes(query);
+    }
+
+    function displayValidation(result) {
+      let html = "<ul>";
+      for (let code in result) {
+        html += `<li>${code}: ${result[code] ? '✅ Valid' : '❌ Invalid'}</li>`;
+      }
+      html += "</ul>";
+      document.getElementById("validateResult").innerHTML = html;
+    }
+
+    function displaySuggestions(suggestions) {
+      let html = "<ul>";
+      suggestions.forEach(item => {
+        html += `<li>${item.code}: ${item.description}</li>`;
+      });
+      html += "</ul>";
+      document.getElementById("suggestResult").innerHTML = html;
+    }
+  </script>
+</body>
+</html>
+
