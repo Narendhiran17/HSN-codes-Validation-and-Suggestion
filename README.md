@@ -31,6 +31,7 @@ It integrates directly with a Google Sheet that holds the HSN master data.
 .
 ├── Code.gs           # Backend logic for validation and suggestion
 ├── index.html        # Frontend interface served as a web app
+├── Link of the app   # Output of the app
 ├── README.md         # You're here!
 ```
 
@@ -99,6 +100,4 @@ clasp clone <script-id>
 
 ---
 
-## 📜 License
 
-MIT License © 2025
